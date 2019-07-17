@@ -47,7 +47,7 @@ function startBrain(){
         if(pauseButtonState==1){
             return;
         }
-        
+
         brainStarted=true;
         document.getElementById("startButton").disabled=true;
         createNextGeneration();
@@ -85,8 +85,13 @@ function createGrid() {
     for (x = 0; x < gridXSize; x++) {
         gridArray[x] = [];
         for (y = 0; y < gridYSize; y++) {
-            //fillGrid(x, y);
-            gridArray[x][y]=(floor(random(0, 2)));
+            //Center the initial area
+            if((x>42&&x<58)&&(y>15&&y<29)){
+                gridArray[x][y]=(floor(random(0, 2)));
+            }else{
+                gridArray[x][y]=0;
+            }
+            
         }
     }
 }
