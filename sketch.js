@@ -1,5 +1,5 @@
 //Resolution is the side length of the grid squares, any grid variables are responsive to resolution 
-var resolution = 12;
+var resolution = 8;
 
 /*What state the pause button is on, default is 0 "Unpaused" with "Pause" displayed,
 1 is "Paused" with "Resume" displayed*/
@@ -10,7 +10,7 @@ var gridArray;
 var gridXSize;
 var gridYSize;
 
-var cycleSpeed=300;
+var cycleSpeed=100;
 
 var brainStarted=false;
 
@@ -86,7 +86,7 @@ function createGrid() {
         gridArray[x] = [];
         for (y = 0; y < gridYSize; y++) {
             //Center the initial area
-            if((x>42&&x<58)&&(y>15&&y<29)){
+            if((x>71&&x<81)&&(y>27&&y<38)){
                 gridArray[x][y]=(floor(random(0, 2)));
             }else{
                 gridArray[x][y]=0;
@@ -124,15 +124,22 @@ function createNextGeneration(){
 
             neighbors -= gridArray[i][j];
             
-            //Rules
-            if((gridArray[i][j]==1) && (neighbors<2)){
-                newArray[i][j]=0;
-            }else if((gridArray[i][j]==1) && (neighbors>3)){
-                newArray[i][j]=0;
-            }else if((gridArray[i][j]==0) && (neighbors==3)){
+            //Rules for Conway's Game of Life
+            // if((gridArray[i][j]==1) && (neighbors<2)){
+            //     newArray[i][j]=0;
+            // }else if((gridArray[i][j]==1) && (neighbors>3)){
+            //     newArray[i][j]=0;
+            // }else if((gridArray[i][j]==0) && (neighbors==3)){
+            //     newArray[i][j]=1;
+            // }else{
+            //     newArray[i][j]=gridArray[i][j];                
+            // }
+
+            //Rules for Seeds
+            if((gridArray[i][j]==0) && (neighbors==2)){
                 newArray[i][j]=1;
             }else{
-                newArray[i][j]=gridArray[i][j];                
+                newArray[i][j]=0;
             }
         }
     }
