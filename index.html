@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Brians Brain | Home</title>
+
+    <meta name="author" content="Benjamin Ray" />
+    <meta name="date" content="Summer 2019" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Required Jquery for Bootstrap Plugins-->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: rgb(82, 78, 78);
+        }
+        #myContainer {
+            border-right: 1px solid white;
+            border-left: 1px solid white;
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #canvasDiv {
+            margin: 0px;
+            padding: 0px;
+        }
+        #mainBody{
+            color: white;
+        }
+        #footer a{
+            color: white;
+        }
+        #footer{
+            padding-top: 50px;
+            padding-bottom: 10px;;
+        }
+    </style>
+    <script src="p5.min.js"></script>
+    <script src="p5.dom.min.js"></script>
+    <script src="sketch.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid text-center">
+        <!--Upper row of buttons-->
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" id="startButton" onclick="startAnt()">Start</button>
+            </div>
+            
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" id="resetButton" onclick="window.location.reload()">Reset</button>
+            </div>
+            
+        </div>
+
+        <!--Canvas location-->
+        <div class="container-fluid text-center" id="canvasDiv">
+            <div class="container-fluid text-center" id="myContainer"></div>
+        </div>
+
+        <!--Main body-->  
+        <div class="container-fluid" id="mainBody">
+            <h1>Langton's Ant</h1>
+            <p class="text-left">
+            Langton's ant is a type of cellular automaton, or a simple form of artificial life, named after its designer, Christopher Langton. The ant lives on an infinitely large chessboard, each square of which can be either black or white. Two pieces of information are associated with this digital insect: the direction that it's facing, and the state of the square that it's currently standing on. Furthermore, the ant's behavior is completely described by three simple rules:
+            </p>
+
+            <p class="text-left">
+                <ol class="text-left">
+                    <li>If it is on a black square, it makes a left turn and proceeds forward by one space.</li>
+                    <li>If it is on a white square, it makes a right turn and proceeds forward by one space.</li>
+                    <li>As it moves to the next square, the one it was on reverses color. </li>
+                </ol>
+            </p>
+
+            <p class="text-left">
+            Interest in Langton's ant stems from the fact that despite being a completely determined system governed by such extremely simple rules, the patterns it produces are fantastically rich and complex. For example, with a single ant for the first 10,000 moves or so, the Ant meanders around, building and then unbuilding structures with little pattern to them. Then, near the end of this chaotic phase, the ant begins to construct a diagonal highway off toward one the edge of the board. In fact, this pattern stems from a sequence of 104 moves that, once started, will go on forever. In the language of chaos theory, the pattern is a stable attractor for the system. Remarkably, no matter what the initial arrangement of squares – even if the white and black squares are set up randomly – the ant will end up building a highway. The ant can be allowed to wrap around the edges of a finite board, thus allowing it to intersect its own path, and it will still end up building the highway. Are there any initial states that don't lead to the diagonal-road-building loop? No exceptions have been found from experiments – but proving it is quite another matter. Most mathematicians believe there is no general analytical method of predicting the position of the ant, or of any such chaotic system, after any given number of moves. Its behavior cannot be reduced to the rules that govern it. In this sense, Langton's ant is a very simple demonstration of the undecidability of the halting problem[1]. 
+            </p>
+
+            <p class="text-left">
+            These simple, simulated ants, whose behavior is dictated by an extremely simple set of rules can, when they act collectively, exhibit some of the phenomena exhibited by large societies of much more complex organisms. From this example, we can begin to get an idea of the arbitrariness of the relationship that exists between some of the complex phenomena exhibited by living systems and their underlying hardware of implementation. In 'reality' these behaviors are just the result of the interactions of a specific kind of Virtual State Machine. The interpretation of their behavior as that of simu- lated ants resides entirely in our heads. Thus, this example can equally well be viewed as another example of an artificial biochemistry, based on the interactions of artificial molecular operators. By keeping the arbitrariness of our interpretations of these behaviors clearly in mind, we can see that complex, Virtual State Machine-like dynamics might be possible in any system that involves the interactions of many simple parts, be they systems at the molecular level or at the level of societies[2]. 
+            </p>
+
+            <p>&nbsp;</p>
+            
+
+            <h4 class="text-left">References:</h4>
+            <p class="text-left">[1] Darling,David. "Langton's ant". http://www.daviddarling.info/encyclopedia/L/Langtons_ant.html</p>
+            <p class="text-left">[2] Langton, Chris G. (1986). "Studying artificial life with cellular automata". Physica D: Nonlinear Phenomena. 22 (1–3): 120–149. doi:10.1016/0167-2789(86)90237-X.</p>
+            <p>&nbsp;</p>
+            
+        </div>
+
+        <footer class="container text-center ft-1" id="footer">
+                <a href="https://www.linkedin.com/in/bnray53">Developer</a>
+        </footer> 
+    </div>
+</body>
+
+</html>
