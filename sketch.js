@@ -1,10 +1,18 @@
 //Resolution is the side length of the grid squares, any grid variables are responsive to resolution 
-var resolution = 8;
+var resolution = 12;
+
+/*What state the pause button is on, default is 0 "Unpaused" with "Pause" displayed,
+1 is "Paused" with "Resume" displayed*/
+var pauseButtonState=0;
 
 //Declaring variables
 var gridArray;
 var gridXSize;
 var gridYSize;
+
+var cycleSpeed=300;
+
+var brainStarted=false;
 
 
 function setup() {
@@ -26,15 +34,45 @@ function setup() {
     //Creating two-dimensional array that will be represented by a grid of clickable squares
     gridArray = [];
 
-    frameRate(5);
-
     //Drawing initial grid
     createGrid();
+    drawGrid();
 }
 
 function draw() {
-    createNextGeneration();
-    drawGrid();
+    
+}
+
+function startBrain(){
+        if(pauseButtonState==1){
+            return;
+        }
+        
+        brainStarted=true;
+        document.getElementById("startButton").disabled=true;
+        createNextGeneration();
+        drawGrid(); 
+        
+        setTimeout(startBrain, cycleSpeed);  
+        
+}
+
+/*pauseAnt() is called on pauseButton click, this changes the word displayed on pauseButton,
+ pauseButtonState, and calls startAnt() if button has been unpaused*/
+ function pauseBrain(){
+        //If startAnt() has been started
+        if(brainStarted){
+            //If paused
+            if(pauseButtonState==0){
+                pauseButtonState=1;
+                document.getElementById("pauseButton").innerHTML = "Resume";
+            //If unpaused    
+            }else if(pauseButtonState==1){
+                document.getElementById("pauseButton").innerHTML = "Pause";
+                pauseButtonState=0;
+                startBrain();
+            }
+        }        
 }
 
 /*windowResized() is a P5.js function, this calls setup() when screen/browser size changes. This in turn causes
