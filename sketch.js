@@ -1,9 +1,9 @@
 //Resolution is the side length of the grid squares, any grid variables are responsive to resolution 
-var resolution = 6;
+var resolution = 14;
 
 /*What state the swap button is on, default is 0 "Random Grid" with solid grid displayed,
 1 is "Solid Grid" with random grid displayed*/
-var swapButtonState=0;
+var swapButtonState=1;
 
 //Declaring variables
 var gridArray;
@@ -34,12 +34,17 @@ function setup() {
     gridXSize = width / resolution;
     gridYSize = height / resolution;
 
+    //Creating two-dimensional array that will be represented by a grid of clickable squares
+    gridArray = [];
     //Drawing initial grid
     createGrid();
+    draw();
 }
 
 function draw() {
-    
+    background(255);
+    generate();
+    drawGrid();
 }
 
 /*windowResized() is a P5.js function, this calls setup() when screen/browser size changes. This in turn causes
@@ -53,9 +58,9 @@ function windowResized(){
 /*NOTE: createGrid() function is only called during setup() function and swapGrid() function,
  fillGrid() function is only called during createGrid() function*/
 
-//Creating two-dimensional array that will be represented by a grid of clickable squares
+
 function createGrid() {
-    gridArray = [];
+    
     for (i = 0; i < gridXSize; i++) {
         gridArray[i] = [];
         for (j = 0; j < gridYSize; j++) {
@@ -82,18 +87,72 @@ function fillGrid(x, y) {
     else if(swapButtonState==1){
         var rand = floor(random(0, 2));
         if (rand == 1) {
-            fill("black");
+            fill("white");
             rect((fx * resolution), (fy * resolution), resolution, resolution);
             indicator = 0;
             gridArray[fx][fy] = new GridContent(indicator);
         } else {
-            fill("white");
+            fill("black");
             rect((fx * resolution), (fy * resolution), resolution, resolution);
             indicator = 1;
             gridArray[fx][fy] = new GridContent(indicator);
         }
     }
     return;
+}
+
+function generate(){
+    var newArray=[];
+    for (m = 0; m < gridXSize; m++) {
+        newArray[m]=[];
+        for (n = 0; n < gridYSize; n++) {
+            var indicator=0;
+            newArray[m][n] = new GridContent(indicator);
+        }
+    }
+    
+    for (i = 1; i < gridXSize-1; i++) {
+        for (j = 1; j < gridYSize-1; j++) {
+
+            var neighbors=0;
+
+            for (k = -1; k <= 1; k++) {
+                for (l = -1; l <= 1; l++) {
+                    neighbors += gridArray[i+k][j+l].ind;
+                }
+            }
+
+            neighbors -= gridArray[i][j].ind;
+            console.log('here');
+            //Rules
+            if((gridArray[i][j].ind==1) && (neighbors<2)){
+                newArray[i][j].ind=0;
+            }else if((gridArray[i][j].ind==1) && (neighbors>3)){
+                newArray[i][j].ind=0;
+            }else if((gridArray[i][j].ind==0) && (neighbors==3)){
+                newArray[i][j].ind=1;
+            }else{
+                newArray[i][j].ind=gridArray[i][j].ind;                
+            }
+        }
+    }
+
+    gridArray=newArray;
+
+}
+
+function drawGrid(){
+    for(i=0;i<gridXSize;i++){
+        for(j=0;j<gridYSize;j++){
+            if(gridArray[i][j].ind == 1){
+                fill("black");
+                rect((i * resolution), (j * resolution), resolution, resolution);
+            }else{
+                fill("white");
+                rect((i * resolution), (j * resolution), resolution, resolution);
+            }
+        }
+    }
 }
 
 
