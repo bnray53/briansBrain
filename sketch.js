@@ -86,12 +86,14 @@ function createGrid() {
         gridArray[x] = [];
         for (y = 0; y < gridYSize; y++) {
             //Center the initial area
-            if((x>71&&x<81)&&(y>27&&y<38)){
-                gridArray[x][y]=(floor(random(0, 2)));
-            }else{
-                gridArray[x][y]=0;
-            }
-            
+            //if((x>65&&x<86)&&(y>23&&y<42)){
+                //gridArray[x][y]=(floor(random(0, 2)));
+            // if((x>65&&x<69)&&(y>23&&y<27)){
+            //     gridArray[x][y]=1;
+            // }else{
+            //     gridArray[x][y]=0;
+            // }
+            gridArray[x][y]=(floor(random(0, 2)));
         }
     }
 }
@@ -108,17 +110,32 @@ function createArray(){
 }
 
 function createNextGeneration(){
-
+    
     var newArray=createArray();
 
     for (i = 1; i < gridXSize-1; i++) {
         for (j = 1; j < gridYSize-1; j++) {
 
+            //Check if the cell is on
+            if(gridArray[i][j]==1){
+                newArray[i][j]=2;
+                continue;
+            }
+
+            //Check if the cell is dying
+            if(gridArray[i][j]==2){
+                newArray[i][j]=0;
+                continue;
+            }
+
+
             var neighbors=0;
 
             for (k = -1; k <= 1; k++) {
                 for (l = -1; l <= 1; l++) {
-                    neighbors += gridArray[i+k][j+l];
+                    if(gridArray[i+k][j+l]<2){
+                        neighbors += gridArray[i+k][j+l];
+                    } 
                 }
             }
 
@@ -136,11 +153,18 @@ function createNextGeneration(){
             // }
 
             //Rules for Seeds
-            if((gridArray[i][j]==0) && (neighbors==2)){
+            // if((gridArray[i][j]==0) && (neighbors==2)){
+            //     newArray[i][j]=1;
+            // }else{
+            //     newArray[i][j]=0;
+            // }
+
+            //Rules for Brians Brain
+            if(neighbors==2){
                 newArray[i][j]=1;
-            }else{
-                newArray[i][j]=0;
             }
+
+
         }
     }
     gridArray=newArray;
@@ -151,6 +175,9 @@ function drawGrid(){
         for(j=0;j<gridYSize;j++){
             if(gridArray[i][j] == 1){
                 fill("black");
+                rect((i * resolution), (j * resolution), resolution, resolution);
+            }else if(gridArray[i][j]==2){
+                fill("grey");
                 rect((i * resolution), (j * resolution), resolution, resolution);
             }else{
                 fill("white");
