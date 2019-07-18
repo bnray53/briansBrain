@@ -1,5 +1,5 @@
 //Resolution is the side length of the grid squares, any grid variables are responsive to resolution 
-var resolution = 8;
+var resolution = 10;
 
 /*What state the pause button is on, default is 0 "Unpaused" with "Pause" displayed,
 1 is "Paused" with "Resume" displayed*/
@@ -10,9 +10,10 @@ var gridArray;
 var gridXSize;
 var gridYSize;
 
-var cycleSpeed=100;
+var cycleSpeed=25;
 
-var brainStarted=false;
+var brainStarted;
+var programComplete;
 
 
 function setup() {
@@ -33,7 +34,8 @@ function setup() {
 
     //Creating two-dimensional array that will be represented by a grid of clickable squares
     gridArray = [];
-
+    programComplete=false;
+    brainStarted=false;
     //Drawing initial grid
     createGrid();
     drawGrid();
@@ -44,6 +46,7 @@ function draw() {
 }
 
 function startBrain(){
+      
         if(pauseButtonState==1){
             return;
         }
@@ -52,9 +55,13 @@ function startBrain(){
         document.getElementById("startButton").disabled=true;
         createNextGeneration();
         drawGrid(); 
-        
-        setTimeout(startBrain, cycleSpeed);  
-        
+        if(!programComplete){    
+            setTimeout(startBrain, cycleSpeed);  
+        }   
+    if(programComplete){
+        setup();
+        startBrain();
+    }
 }
 
 /*pauseAnt() is called on pauseButton click, this changes the word displayed on pauseButton,
@@ -85,14 +92,6 @@ function createGrid() {
     for (x = 0; x < gridXSize; x++) {
         gridArray[x] = [];
         for (y = 0; y < gridYSize; y++) {
-            //Center the initial area
-            //if((x>65&&x<86)&&(y>23&&y<42)){
-                //gridArray[x][y]=(floor(random(0, 2)));
-            // if((x>65&&x<69)&&(y>23&&y<27)){
-            //     gridArray[x][y]=1;
-            // }else{
-            //     gridArray[x][y]=0;
-            // }
             gridArray[x][y]=(floor(random(0, 2)));
         }
     }
@@ -110,7 +109,7 @@ function createArray(){
 }
 
 function createNextGeneration(){
-    
+    var emptyCheck=0;
     var newArray=createArray();
 
     for (i = 1; i < gridXSize-1; i++) {
@@ -162,10 +161,16 @@ function createNextGeneration(){
             //Rules for Brians Brain
             if(neighbors==2){
                 newArray[i][j]=1;
+            }else if(neighbors==0){
+                emptyCheck++;
             }
 
 
         }
+    }
+    if(emptyCheck==((gridXSize-2)*(gridYSize-2))){
+        programComplete=true;
+        return;
     }
     gridArray=newArray;
 }
@@ -186,9 +191,3 @@ function drawGrid(){
         }
     }
 }
-
-
-
-
- 
-
