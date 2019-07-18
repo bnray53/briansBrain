@@ -2,4 +2,4 @@ DONE-School Write Up.
 DONE-HTML writeup
 Create README.md
 DONE-comment and clean-up code
-Upload to GitHub
+DONE-Upload to GitHub
