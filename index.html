@@ -76,35 +76,58 @@
 
         <!--Main body-->  
         <div class="container-fluid" id="mainBody">
-            <h1>Langton's Ant</h1>
+            <h1>Brian's Brain</h1>
             <p class="text-left">
-            Langton's ant is a type of cellular automaton, or a simple form of artificial life, named after its designer, Christopher Langton. The ant lives on an infinitely large chessboard, each square of which can be either black or white. Two pieces of information are associated with this digital insect: the direction that it's facing, and the state of the square that it's currently standing on. Furthermore, the ant's behavior is completely described by three simple rules:
+                This is a simulator build to demonstrate the cellular automaton known as "Brian's Brain". A cellular automaton
+                can be thought of as a simple form of artificial life, in that a new generation of cells is generated or evolved
+                from the states of previous cells.
             </p>
-
+        
+            <p class="text-left">
+                This action is accomplished by checking the state of each previous cell. These states are made up of three forms: "on",
+                "dying", and "off". These are indicated by the colors black, grey, and white respectively. As with most cellular
+                automaton these previous cell states are then checked against a set of rules to determine the next generations
+                cell state. In this particular automaton there are three rules that are followed.
+            </p>
+        
             <p class="text-left">
                 <ol class="text-left">
-                    <li>If it is on a black square, it makes a left turn and proceeds forward by one space.</li>
-                    <li>If it is on a white square, it makes a right turn and proceeds forward by one space.</li>
-                    <li>As it moves to the next square, the one it was on reverses color. </li>
+                    <li>If the previous state of the cell was on (this is indicated by black cells), the cell is switched to
+                        dying (this is indicated by grey cells).</li>
+                    <li>If the previous state of the cell was dying, the cell is switched to off (this is indicated by a white
+                        cell).</li>
+                    <li>If the previous state of the cell was off and exactly two of its neighboring cells[1] are on, the cell is
+                        switched on.</li>
                 </ol>
             </p>
-
+        
             <p class="text-left">
-            Interest in Langton's ant stems from the fact that despite being a completely determined system governed by such extremely simple rules, the patterns it produces are fantastically rich and complex. For example, with a single ant for the first 10,000 moves or so, the Ant meanders around, building and then unbuilding structures with little pattern to them. Then, near the end of this chaotic phase, the ant begins to construct a diagonal highway off toward one the edge of the board. In fact, this pattern stems from a sequence of 104 moves that, once started, will go on forever. In the language of chaos theory, the pattern is a stable attractor for the system. Remarkably, no matter what the initial arrangement of squares – even if the white and black squares are set up randomly – the ant will end up building a highway. The ant can be allowed to wrap around the edges of a finite board, thus allowing it to intersect its own path, and it will still end up building the highway. Are there any initial states that don't lead to the diagonal-road-building loop? No exceptions have been found from experiments – but proving it is quite another matter. Most mathematicians believe there is no general analytical method of predicting the position of the ant, or of any such chaotic system, after any given number of moves. Its behavior cannot be reduced to the rules that govern it. In this sense, Langton's ant is a very simple demonstration of the undecidability of the halting problem[1]. 
+                With these three rules in place the program starts with a grid of randomly assigned states, and then when the
+                start button is clicked new generations are formed based on the rules listed above. The program can be paused or
+                reset at any time using the applicable buttons. The simulation will run until all the cells in the grid are off. It
+                will then reset the board and run the simulation again with a new randomly generated starting grid.
+            </p>
+        
+            <p class="text-left">
+                This particular cellular automaton has a tendency to create unique diagonal shapes, some of which will try to
+                replicate all or part of themselves. Some of these replications are identical to each other and are known
+                mathematically as "spaceships". The Brian's Brain automaton was named after its creator Brian Silverman who
+                created it in the mid 1990's.
+            </p>
+        
+            <p class="text-left">
+                This simulator was built using the JavaScript P5.js library and using Bootstrap3 for the page styling. It is
+                fully responsive in nature and can be viewed and interacted with on phones, tablets, and computers.
             </p>
 
             <p class="text-left">
-            These simple, simulated ants, whose behavior is dictated by an extremely simple set of rules can, when they act collectively, exhibit some of the phenomena exhibited by large societies of much more complex organisms. From this example, we can begin to get an idea of the arbitrariness of the relationship that exists between some of the complex phenomena exhibited by living systems and their underlying hardware of implementation. In 'reality' these behaviors are just the result of the interactions of a specific kind of Virtual State Machine. The interpretation of their behavior as that of simu- lated ants resides entirely in our heads. Thus, this example can equally well be viewed as another example of an artificial biochemistry, based on the interactions of artificial molecular operators. By keeping the arbitrariness of our interpretations of these behaviors clearly in mind, we can see that complex, Virtual State Machine-like dynamics might be possible in any system that involves the interactions of many simple parts, be they systems at the molecular level or at the level of societies[2]. 
+                [1]: A cell has eight neighboring cells. The best way to imagine these cells is to picture a 3x3 square block of
+                cells with the center cell being the cell in question, the remaining eight cells surrounding this center cell are
+                this cells neighboring cells.
             </p>
-
+        
             <p>&nbsp;</p>
-            
-
-            <h4 class="text-left">References:</h4>
-            <p class="text-left">[1] Darling,David. "Langton's ant". http://www.daviddarling.info/encyclopedia/L/Langtons_ant.html</p>
-            <p class="text-left">[2] Langton, Chris G. (1986). "Studying artificial life with cellular automata". Physica D: Nonlinear Phenomena. 22 (1–3): 120–149. doi:10.1016/0167-2789(86)90237-X.</p>
-            <p>&nbsp;</p>
-            
+        
         </div>
 
         <footer class="container text-center ft-1" id="footer">

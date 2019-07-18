@@ -93,7 +93,7 @@ function createGrid() {
     for (x = 0; x < gridXSize; x++) {
         gridArray[x] = [];
         for (y = 0; y < gridYSize; y++) {
-            gridArray[x][y] = (floor(random(0, 2)));
+            gridArray[x][y] = (floor(random(0, 2))); //change to 3  for dying initial cells???
         }
     }
 }
