@@ -1,5 +1,7 @@
 DONE-School Write Up.
 DONE-HTML writeup
-Create README.md
+DONE-Create README.md
 DONE-comment and clean-up code
 DONE-Upload to GitHub
+
+Need to optimize for speed
