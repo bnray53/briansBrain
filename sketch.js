@@ -25,7 +25,6 @@ function setup() {
     let myCanvas = createCanvas(((floor((window.innerWidth - 50) / resolution)) * resolution), ((floor((window.innerHeight - 45) / resolution)) * resolution));
 
     myCanvas.parent("myContainer");
-    background(100);
 
     //Gives variables in terms of array indexes rather than pixels
     gridXSize = width / resolution;
@@ -66,7 +65,7 @@ function draw() {
 
 /*pauseBrain() is called on pauseButton click, this changes the word displayed on pauseButton,
  pauseButtonState, and calls draw() if button has been unpaused*/
-function pauseBrain() {
+const pauseBrain=()=>{
         //If paused
         if (pauseButtonState == 0) {
             pauseButtonState = 1;
@@ -81,12 +80,12 @@ function pauseBrain() {
 
 /*windowResized() is a P5.js function, this calls setup() when screen/browser size changes. This in turn causes
 the program to be drawn responsively to new screen/browser size*/
-function windowResized() {
+function windowResized(){
     setup();
 }
 
 //Creating a 2 dimensional array
-function createArray() {
+const createArray=()=>{
     let array = new Array(gridXSize);
     for (i = 0; i < gridXSize; i++) {
         array[i] = new Array(gridYSize); 
@@ -94,7 +93,7 @@ function createArray() {
     return array;
 }
 
-function createNextGeneration() {
+const createNextGeneration=()=>{
     //Counter to check if grid is all dead
     let emptyCheck = 0;
 
@@ -157,7 +156,7 @@ function createNextGeneration() {
 }
 
 //Cycle through all cells and draw them according to the state of the array at that location.
-function drawGrid() {
+const drawGrid=()=>{
     background("white");
     for (i = 0; i < gridXSize; i++) {
         for (j = 0; j < gridYSize; j++) {
