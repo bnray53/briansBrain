@@ -1,9 +1,9 @@
 //Resolution is the side length of the grid squares, any grid variables are responsive to resolution 
-const resolution = 10;
+const resolution = 6;
 
 /*What state the pause button is on, default is 0 "Unpaused" with "Pause" displayed,
 1 is "Paused" with "Resume" displayed*/
-let pauseButtonState = 0;
+let pauseButtonState = 1;
 
 //Declaring variables
 let gridArray;
@@ -11,11 +11,7 @@ let gridXSize;
 let gridYSize;
 let innerGridSize;
 
-//Frame Rate
-let cycleSpeed = 25;
-
-//Flags
-let brainStarted;
+//Boolean flag
 let programComplete;
 
 function setup() {
@@ -30,6 +26,7 @@ function setup() {
 
     myCanvas.parent("myContainer");
     background(100);
+
     //Gives variables in terms of array indexes rather than pixels
     gridXSize = width / resolution;
     gridYSize = height / resolution;
@@ -37,49 +34,39 @@ function setup() {
     //Used later to check if the grid is empty
     innerGridSize = ((gridXSize - 2) * (gridYSize - 2))
 
-    //Creating two-dimensional array that will be represented by a grid of clickable squares
-    gridArray = [];
+    //Creating two-dimensional array filles with state values of 0, 1, or 2
+    gridArray = createArray();
+    for (i = 0; i < gridXSize; i++) {
+        for (j = 0; j < gridYSize; j++) {
+          gridArray[i][j] = floor(random(3));
+        }
+    }
 
-    //Setting flags
+    //Setting flag
     programComplete = false;
-    brainStarted = false;
 
-    //Drawing initial grid
-    createGrid();
+    //Drawing initial grid and setting frame rate
     drawGrid();
+    frameRate(14);
 }
 
 function draw() {
-
-}
-
-//Controlled by start button click event
-function startBrain() {
-
     if (pauseButtonState == 1) {
         return;
     }
-
-    brainStarted = true;
-    document.getElementById("startButton").disabled = true;
-
+    
     createNextGeneration();
     drawGrid();
 
-    //If grid not empty re-run startBrain function, else re-run program from start
-    if (!programComplete) {
-        setTimeout(startBrain, cycleSpeed);
-    }else if(programComplete) {
+    //If grid empty run setup, (this restarts the program)
+    if(programComplete) {
         setup();
-        startBrain();
     }
 }
 
 /*pauseBrain() is called on pauseButton click, this changes the word displayed on pauseButton,
- pauseButtonState, and calls startAnt() if button has been unpaused*/
+ pauseButtonState, and calls draw() if button has been unpaused*/
 function pauseBrain() {
-    //If startBrain() has been started
-    if (brainStarted) {
         //If paused
         if (pauseButtonState == 0) {
             pauseButtonState = 1;
@@ -88,8 +75,7 @@ function pauseBrain() {
         } else if (pauseButtonState == 1) {
             document.getElementById("pauseButton").innerHTML = "Pause";
             pauseButtonState = 0;
-            startBrain();
-        }
+            draw();
     }
 }
 
@@ -99,24 +85,11 @@ function windowResized() {
     setup();
 }
 
-//Creating a 2 dimensional array and filling with random numbers between 0 and 2
-function createGrid() {
-    for (x = 0; x < gridXSize; x++) {
-        gridArray[x] = [];
-        for (y = 0; y < gridYSize; y++) {
-            gridArray[x][y] = (floor(random(0, 3)));
-        }
-    }
-}
-
-//Creating a 2 dimensional array and filling with all zeros
+//Creating a 2 dimensional array
 function createArray() {
-    let array = [];
+    let array = new Array(gridXSize);
     for (i = 0; i < gridXSize; i++) {
-        array[i] = [];
-        for (j = 0; j < gridYSize; j++) {
-            array[i][j] = 0;
-        }
+        array[i] = new Array(gridYSize); 
     }
     return array;
 }
@@ -127,19 +100,25 @@ function createNextGeneration() {
 
     //Creating a new array filled with zeros
     let newArray = createArray();
-
+    for (i = 0; i < gridXSize; i++) {
+        for (j = 0; j < gridYSize; j++) {
+            newArray[i][j] = 0;
+        }
+    }
     //Cycle through all cells except perimeter cells
     for (i = 1; i < gridXSize - 1; i++) {
         for (j = 1; j < gridYSize - 1; j++) {
 
+            let stateOfCell=gridArray[i][j];
+
             //Check if the cell is on, if so switch to dying
-            if (gridArray[i][j] == 1) {
+            if (stateOfCell == 1) {
                 newArray[i][j] = 2;
                 continue;
             }
 
             //Check if the cell is dying, if so switch to dead
-            if (gridArray[i][j] == 2) {
+            if (stateOfCell == 2) {
                 newArray[i][j] = 0;
                 continue;
             }
@@ -156,7 +135,7 @@ function createNextGeneration() {
             }
 
             //Subtract current cell
-            neighbors -= gridArray[i][j];
+            neighbors -= stateOfCell;
 
             //At this point the cell is definately off, if it has 2 neighbors turn on. Else count as dead cell.
             if (neighbors == 2) {
@@ -179,16 +158,16 @@ function createNextGeneration() {
 
 //Cycle through all cells and draw them according to the state of the array at that location.
 function drawGrid() {
+    background("white");
     for (i = 0; i < gridXSize; i++) {
         for (j = 0; j < gridYSize; j++) {
             if (gridArray[i][j] == 1) {
                 fill("black");
+                stroke(0);
                 rect((i * resolution), (j * resolution), resolution, resolution);
             } else if (gridArray[i][j] == 2) {
                 fill("grey");
-                rect((i * resolution), (j * resolution), resolution, resolution);
-            } else {
-                fill("white");
+                stroke(0);
                 rect((i * resolution), (j * resolution), resolution, resolution);
             }
         }

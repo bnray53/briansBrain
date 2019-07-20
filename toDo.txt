@@ -4,4 +4,4 @@ DONE-Create README.md
 DONE-comment and clean-up code
 DONE-Upload to GitHub
 
-Need to optimize for speed
+DONE-Need to optimize for speed

@@ -15,7 +15,7 @@
 ### Examples
 - Below is an example of some of the unique patterns and constructions that can appear after the automaton is run.
 
-![picture of Brian's Brain](https://github.com/bnray53/briansBrain/blob/master/pictureOfBrain.PNG)
+![picture of Brian's Brain](https://github.com/bnray53/briansBrain/blob/master/pictureOfBrainV2.PNG)
 
 ### Live Demo
 [Brian&apos;s Brain](https://bnray53.github.io/briansBrain "Brian's Brain")
